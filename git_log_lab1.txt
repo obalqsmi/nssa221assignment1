@@ -1,4 +1,7 @@
-* 696cf8d (HEAD -> main) Add collector output from script test
+* 4128567 (HEAD -> main) Simplify README wording
+* 0e26f8b Clean up script comments and header
+* c48bfe8 Generate Lab 1 submission log
+* 696cf8d Add collector output from script test
 * 2649e3f Add positional argument handling and report output
 * b8e76d4 Implement command substitution for system metrics
 * 17087ac Demonstrate quoting rules with explanatory comment
