@@ -7,5 +7,5 @@
 * 17087ac Demonstrate quoting rules with explanatory comment
 * 3e0470a Add shebang and make syshealth.sh executable
 * e344def Add repository ignore rules
-* 49fe6e3 Set up project README for NSSA221 toolkit
+* 49fe6e3 Set up project README for toolkit
 * 42580fe Initial commit
