@@ -15,7 +15,6 @@ echo "Hostname without quotes: $HOSTNAME"
 echo "Hostname with quotes: \"$HOSTNAME\""
 
 cat << EOF
-# COMMENT FOR GRADER:
 # In Bash, an unquoted variable can be split if it contains spaces, tabs, or new lines.
 # Double quotes keep the value together, so I use them unless I actually want splitting.
 EOF
