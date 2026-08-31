@@ -3,34 +3,30 @@
 # syshealth.sh - System Health & Log Analysis Toolkit
 # Lab 1 - Data Collector
 # Author: Obaid Qassim
-# Date: $(date +%Y-%m-%d)
+# Date: 2026-08-31 14:29
 # ===============================================
 
-# --- Variables and quoting demonstration ---
+# basic variables
 HOSTNAME=$(hostname)
 CURRENT_DATE=$(date '+%Y-%m-%d %H:%M:%S')
 
-# IMPORTANT: Quoting demo (Python/Java students read this!)
-# Without quotes -> word-splitting bug (try it!)
-# With double quotes -> safe (Bash best practice)
+# showing the difference between quoted and unquoted variables
 echo "Hostname without quotes: $HOSTNAME"
 echo "Hostname with quotes: \"$HOSTNAME\""
 
-# Add a comment explaining the difference (required for marks):
 cat << EOF
 # COMMENT FOR GRADER:
-# In Python/Java variables expand safely.
-# In Bash, unquoted \$VAR splits on spaces/tabs/newlines.
-# Always double-quote unless you deliberately want splitting.
+# In Bash, an unquoted variable can be split if it contains spaces, tabs, or new lines.
+# Double quotes keep the value together, so I use them unless I actually want splitting.
 EOF
 
-# --- System metrics collection ---
+# collect system info
 UPTIME=$(uptime -p)
 DISK_USAGE=$(df -h / | tail -1)
 MEMORY_USAGE=$(free -h | awk '/Mem:/ {print $3 "/" $2}')
 PROCESS_COUNT=$(ps -e | wc -l)
 
-# --- Output handling ---
+# optional output file
 OUTPUT_FILE="${1:-}"
 
 print_report() {
