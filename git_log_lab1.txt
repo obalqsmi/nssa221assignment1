@@ -1,0 +1,8 @@
+* 696cf8d (HEAD -> main) Add collector output from script test
+* 2649e3f Add positional argument handling and report output
+* b8e76d4 Implement command substitution for system metrics
+* 17087ac Demonstrate quoting rules with explanatory comment
+* 3e0470a Add shebang and make syshealth.sh executable
+* e344def Add repository ignore rules
+* 49fe6e3 Set up project README for NSSA221 toolkit
+* 42580fe Initial commit
