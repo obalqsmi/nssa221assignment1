@@ -1,3 +1,5 @@
 # System Health & Log Analysis Toolkit
 
-Personal Bash project for NSSA221 – built from scratch, no AI assistance.
+NSSA221 Lab 1 Bash project.
+
+The script collects basic system information like the hostname, uptime, disk usage, memory usage, and number of running processes. It can print the report in the terminal or save it to a text file.
