@@ -67,6 +67,23 @@ else
     print_status "OK" "Disk usage on / is ${DISK_PCT}%"
 fi
 
+# --- Loop over multiple mount points (more realistic monitoring) ---
+# / is always checked. /home and /var are checked when they are mount points.
+for mount in / /home /var; do
+    if mountpoint -q "$mount" 2>/dev/null || [[ "$mount" == "/" ]]; then
+        PCT=$(df "$mount" | tail -1 | awk '{gsub("%",""); print $5}')
+
+        if (( PCT > DISK_THRESHOLD )); then
+            print_status "ALERT" "Disk usage on $mount is ${PCT}% (threshold ${DISK_THRESHOLD}%)"
+            HEALTH_STATUS=1
+        else
+            print_status "OK" "Disk usage on $mount is ${PCT}%"
+        fi
+    else
+        print_status "OK" "Mount point $mount does not exist or is not a mount point on this system"
+    fi
+done
+
 # Memory check.
 if (( MEM_PCT > MEM_THRESHOLD )); then
     print_status "ALERT" "Memory usage is ${MEM_PCT}% (threshold ${MEM_THRESHOLD}%)"
@@ -94,14 +111,16 @@ print_report() {
     printf "Disk /          : %s\n" "$DISK_USAGE"
     printf "Memory used     : %s\n" "$MEMORY_USAGE"
     printf "Total processes : %s\n" "$PROCESS_COUNT"
+    printf "Health status   : %s\n" "$([[ "$HEALTH_STATUS" -eq 0 ]] && echo "HEALTHY" || echo "UNHEALTHY - see alerts above")"
     printf "========================================\n"
 }
 
-if [ -n "$OUTPUT_FILE" ]; then
+if [[ -n "$OUTPUT_FILE" ]]; then
     print_report > "$OUTPUT_FILE"
-    echo "Report written to $OUTPUT_FILE"
+    echo "Report written to $OUTPUT_FILE (alerts were printed to terminal)"
 else
     print_report
 fi
 
-exit 0
+# Exit 0 when healthy and 1 when one or more checks triggered an alert.
+exit "${HEALTH_STATUS:-0}"
