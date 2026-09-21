@@ -11,6 +11,21 @@ CPU_THRESHOLD=75
 MEM_THRESHOLD=85
 DISK_THRESHOLD=85
 
+# --- Color-coded status helper function ---
+# local keeps these temporary values inside the function.
+print_status() {
+    local status="$1"
+    local message="$2"
+
+    if [[ "$status" == "OK" ]]; then
+        echo -e "\e[32mOK: $message\e[0m"
+    elif [[ "$status" == "ALERT" ]]; then
+        echo -e "\e[31mALERT: $message\e[0m"
+    else
+        echo -e "\e[36m$status: $message\e[0m"
+    fi
+}
+
 # basic variables
 HOSTNAME=$(hostname)
 CURRENT_DATE=$(date '+%Y-%m-%d %H:%M:%S')
