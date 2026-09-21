@@ -45,6 +45,44 @@ DISK_USAGE=$(df -h / | tail -1)
 MEMORY_USAGE=$(free -h | awk '/Mem:/ {print $3 "/" $2}')
 PROCESS_COUNT=$(ps -e | wc -l)
 
+# --- Parse numeric percentages for threshold comparison (Rocky Linux 9 compatible) ---
+# Strip the percent sign from root filesystem usage so Bash can compare integers.
+DISK_PCT=$(df / | tail -1 | awk '{gsub("%",""); print $5}')
+
+# Calculate used memory as a percentage of total memory, rounded to an integer.
+MEM_PCT=$(free | awk '/Mem:/ {printf "%.0f", $3/$2*100}')
+
+# Calculate CPU usage as 100 minus the idle percentage from a short top snapshot.
+CPU_PCT=$(top -bn1 | grep '^%Cpu' | awk '{print 100 - $8}' | cut -d. -f1)
+
+# --- Health checks with conditionals and color-coded output ---
+print_status "CHECK" "Running system health analysis..."
+HEALTH_STATUS=0
+
+# Disk check for the root filesystem.
+if (( DISK_PCT > DISK_THRESHOLD )); then
+    print_status "ALERT" "Disk usage on / is ${DISK_PCT}% (threshold ${DISK_THRESHOLD}%)"
+    HEALTH_STATUS=1
+else
+    print_status "OK" "Disk usage on / is ${DISK_PCT}%"
+fi
+
+# Memory check.
+if (( MEM_PCT > MEM_THRESHOLD )); then
+    print_status "ALERT" "Memory usage is ${MEM_PCT}% (threshold ${MEM_THRESHOLD}%)"
+    HEALTH_STATUS=1
+else
+    print_status "OK" "Memory usage is ${MEM_PCT}%"
+fi
+
+# CPU check.
+if (( CPU_PCT > CPU_THRESHOLD )); then
+    print_status "ALERT" "CPU usage is ${CPU_PCT}% (threshold ${CPU_THRESHOLD}%)"
+    HEALTH_STATUS=1
+else
+    print_status "OK" "CPU usage is ${CPU_PCT}%"
+fi
+
 # optional output file
 OUTPUT_FILE="${1:-}"
 
