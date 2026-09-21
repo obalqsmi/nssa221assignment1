@@ -6,6 +6,11 @@
 # Date: 2026-08-31 14:29
 # ===============================================
 
+# --- Thresholds (change these values to test alert behavior) ---
+CPU_THRESHOLD=75
+MEM_THRESHOLD=85
+DISK_THRESHOLD=85
+
 # basic variables
 HOSTNAME=$(hostname)
 CURRENT_DATE=$(date '+%Y-%m-%d %H:%M:%S')
