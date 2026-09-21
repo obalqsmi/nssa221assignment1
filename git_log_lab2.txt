@@ -1,4 +1,6 @@
-* 35d82bd (HEAD -> main, origin/main) Add Lab 2 Rocky Linux health report
+* 82c9b4b (HEAD -> main, origin/main) Improve Lab 2 documentation comments
+* c54a582 Generate Lab 2 submission log
+* 35d82bd Add Lab 2 Rocky Linux health report
 * eaf3ccc Add for-loop over multiple mount points and update exit code handling
 * 4aca354 Add parsing and conditional checks for disk, memory, and CPU
 * 0d6164e Implement print_status function with color-coded output
@@ -16,5 +18,3 @@
 * b8e76d4 Implement command substitution for system metrics
 * 17087ac Demonstrate quoting rules with explanatory comment
 * 3e0470a Add shebang and make syshealth.sh executable
-* e344def Add repository ignore rules
-* 49fe6e3 Set up project README for NSSA221 toolkit
